@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /politika.html
+
+# Перед публикацией замените [домен] на адрес сайта
+Sitemap: https://[домен]/sitemap.xml
