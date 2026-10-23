@@ -92,3 +92,22 @@
     }
   });
 })();
+
+// Волна на кнопках: кольцо расходится от точки нажатия (с клавиатуры – из центра).
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.btn');
+    if (!btn) return;
+    var r = btn.getBoundingClientRect();
+    var fromPointer = e.clientX || e.clientY;
+    var x = fromPointer ? e.clientX - r.left : r.width / 2;
+    var y = fromPointer ? e.clientY - r.top : r.height / 2;
+    var size = Math.hypot(Math.max(x, r.width - x), Math.max(y, r.height - y)) * 2;
+    var wave = document.createElement('span');
+    wave.className = 'btn__wave';
+    wave.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + size + 'px;height:' + size + 'px';
+    btn.appendChild(wave);
+    wave.addEventListener('animationend', function () { wave.remove(); });
+  });
+})();
