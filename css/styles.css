@@ -231,6 +231,6 @@ a { color: var(--brand-primary); }
 .btn--outline-light, .btn--glass { --glow: var(--brand-white); --wave: var(--brand-accent); }
 .btn:hover, .btn:focus-visible { box-shadow: 0 0 0 4px color-mix(in srgb, var(--glow) 22%, transparent), 0 8px 30px -2px color-mix(in srgb, var(--glow) 65%, transparent); }
 .btn--outline-light:hover, .btn--outline-light:focus-visible { box-shadow: inset 0 0 0 2px var(--brand-white), 0 0 0 4px color-mix(in srgb, var(--glow) 18%, transparent), 0 8px 30px -2px color-mix(in srgb, var(--glow) 45%, transparent); }
-.btn__wave { position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%) scale(0); background: radial-gradient(circle, transparent 52%, color-mix(in srgb, var(--wave) 70%, transparent) 62%, transparent 72%); animation: btn-wave .7s cubic-bezier(.2, .7, .3, 1) forwards; }
+.btn__wave { position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%) scale(0); background: radial-gradient(circle, color-mix(in srgb, var(--wave) 30%, transparent) 0, color-mix(in srgb, var(--wave) 20%, transparent) 46%, color-mix(in srgb, var(--wave) 90%, transparent) 58%, transparent 70%); animation: btn-wave .9s cubic-bezier(.2, .7, .3, 1) forwards; }
 @keyframes btn-wave { 70% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn__wave { display: none; } }

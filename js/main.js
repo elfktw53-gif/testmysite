@@ -93,21 +93,26 @@
   });
 })();
 
-// Волна на кнопках: кольцо расходится от точки нажатия (с клавиатуры – из центра).
+// Волна на кнопках: кольцо расходится от точки нажатия. Запускается сразу при нажатии (pointerdown),
+// чтобы её было видно и на кнопках, которые уводят в Telegram или к звонку; с клавиатуры – из центра.
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function wave(btn, x, y) {
+    var r = btn.getBoundingClientRect();
+    if (x == null) { x = r.width / 2; y = r.height / 2; } else { x -= r.left; y -= r.top; }
+    var size = Math.hypot(Math.max(x, r.width - x), Math.max(y, r.height - y)) * 2;
+    var w = document.createElement('span');
+    w.className = 'btn__wave';
+    w.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + size + 'px;height:' + size + 'px';
+    btn.appendChild(w);
+    w.addEventListener('animationend', function () { w.remove(); });
+  }
+  document.addEventListener('pointerdown', function (e) {
+    var btn = e.target.closest('.btn');
+    if (btn && e.button === 0) wave(btn, e.clientX, e.clientY);
+  });
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('.btn');
-    if (!btn) return;
-    var r = btn.getBoundingClientRect();
-    var fromPointer = e.clientX || e.clientY;
-    var x = fromPointer ? e.clientX - r.left : r.width / 2;
-    var y = fromPointer ? e.clientY - r.top : r.height / 2;
-    var size = Math.hypot(Math.max(x, r.width - x), Math.max(y, r.height - y)) * 2;
-    var wave = document.createElement('span');
-    wave.className = 'btn__wave';
-    wave.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + size + 'px;height:' + size + 'px';
-    btn.appendChild(wave);
-    wave.addEventListener('animationend', function () { wave.remove(); });
+    if (btn && e.detail === 0) wave(btn); // нажатие Enter или пробелом
   });
 })();
